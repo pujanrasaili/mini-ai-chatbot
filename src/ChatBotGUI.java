@@ -6,34 +6,34 @@ import java.util.*;
 public class ChatBotGUI {
 
     private JFrame frame;
-    private JTextArea chatArea;
+    private JPanel chatPanel;
     private JTextField inputField;
-    private JButton sendButton;
+    private JScrollPane scrollPane;
 
     public ChatBotGUI() {
         frame = new JFrame("Mini AI Chatbot 🤖");
-        chatArea = new JTextArea();
+
+        chatPanel = new JPanel();
+        chatPanel.setLayout(new BoxLayout(chatPanel, BoxLayout.Y_AXIS));
+        chatPanel.setBackground(Color.BLACK);
+
+        scrollPane = new JScrollPane(chatPanel);
+        scrollPane.setBorder(null);
+
         inputField = new JTextField();
-        sendButton = new JButton("Send");
 
-        // Chat area settings
-        chatArea.setEditable(false);
-        chatArea.setFont(new Font("Arial", Font.PLAIN, 14));
+        JButton sendButton = new JButton("Send");
 
-        // 🌙 Dark Theme
-        chatArea.setBackground(Color.BLACK);
-        chatArea.setForeground(Color.GREEN);
+        // Bottom panel
+        JPanel bottomPanel = new JPanel(new BorderLayout());
+        bottomPanel.add(inputField, BorderLayout.CENTER);
+        bottomPanel.add(sendButton, BorderLayout.EAST);
+
+        // Dark theme
         inputField.setBackground(Color.DARK_GRAY);
         inputField.setForeground(Color.WHITE);
         sendButton.setBackground(Color.GRAY);
         sendButton.setForeground(Color.WHITE);
-
-        JScrollPane scrollPane = new JScrollPane(chatArea);
-
-        // Bottom panel (input + button)
-        JPanel bottomPanel = new JPanel(new BorderLayout());
-        bottomPanel.add(inputField, BorderLayout.CENTER);
-        bottomPanel.add(sendButton, BorderLayout.EAST);
 
         frame.setLayout(new BorderLayout());
         frame.add(scrollPane, BorderLayout.CENTER);
@@ -43,35 +43,61 @@ public class ChatBotGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
-        chatArea.append("Bot: Hello! I'm your chatbot 🤖\n\n");
+        addBotMessage("Hello! I'm your chatbot 🤖");
 
-        // 🔁 Action (Enter key)
-        inputField.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                sendMessage();
-            }
-        });
+        // Enter key
+        inputField.addActionListener(e -> sendMessage());
 
-        // 🔁 Action (Send button)
-        sendButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                sendMessage();
-            }
-        });
+        // Button click
+        sendButton.addActionListener(e -> sendMessage());
     }
 
-    // 💬 Handle sending message
     private void sendMessage() {
-        String userInput = inputField.getText();
+        String text = inputField.getText().trim();
+        if (text.isEmpty()) return;
 
-        if (userInput.trim().isEmpty()) return;
+        addUserMessage(text);
 
-        chatArea.append("You: " + userInput + "\n");
-
-        String response = getResponse(userInput.toLowerCase());
-        chatArea.append("Bot: " + response + "\n\n");
+        String response = getResponse(text.toLowerCase());
+        addBotMessage(response);
 
         inputField.setText("");
+    }
+
+    // 💬 USER bubble (right side)
+    private void addUserMessage(String message) {
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        panel.setBackground(Color.BLACK);
+
+        JLabel label = new JLabel("<html><p style='padding:5px;'>" + message + "</p></html>");
+        label.setOpaque(true);
+        label.setBackground(Color.GREEN);
+        label.setForeground(Color.BLACK);
+
+        panel.add(label);
+        chatPanel.add(panel);
+        refreshChat();
+    }
+
+    // 🤖 BOT bubble (left side)
+    private void addBotMessage(String message) {
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        panel.setBackground(Color.BLACK);
+
+        JLabel label = new JLabel("<html><p style='padding:5px;'>" + message + "</p></html>");
+        label.setOpaque(true);
+        label.setBackground(Color.DARK_GRAY);
+        label.setForeground(Color.WHITE);
+
+        panel.add(label);
+        chatPanel.add(panel);
+        refreshChat();
+    }
+
+    private void refreshChat() {
+        chatPanel.revalidate();
+        JScrollBar vertical = scrollPane.getVerticalScrollBar();
+        vertical.setValue(vertical.getMaximum());
     }
 
     // 🤖 Bot logic
