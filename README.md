@@ -48,3 +48,6 @@ java ChatBot
 ## 📄 License
 
 MIT — free to use and modify.
+
+## 👨‍💻 Author
+**Pujan Rasaili**
