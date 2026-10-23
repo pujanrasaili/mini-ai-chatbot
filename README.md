@@ -1,25 +1,25 @@
-# 🤖 Mini AI Chatbot
+# Mini AI Chatbot
 
 > Your intelligent chat companion — NexusAI
 
 A Java-based chatbot with a premium dark GUI built using Java Swing.
 
-## ✨ Features
+## Features
 
-- 💬 Interactive real-time chat
-- 🧠 Smart keyword-based responses
-- ⏰ Shows current time
-- 🎨 Premium dark UI with rounded bubbles
-- ⌨️ Typing indicator
-- 😄 Jokes, greetings, and more responses
-- 🟢 Online status indicator
+- Interactive real-time chat
+- Smart keyword-based responses
+- Shows current time
+- Premium dark UI with rounded bubbles
+- Typing indicator
+- Jokes, greetings, and more responses
+- Online status indicator
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - Java
 - Java Swing (GUI)
 
-## ▶️ How to Run
+## How to Run
 
 ```bash
 # Compile
@@ -33,7 +33,7 @@ javac ChatBot.java
 java ChatBot
 ```
 
-## 💬 Supported Commands
+## Supported Commands
 
 | You say | Bot replies |
 |---|---|
@@ -41,13 +41,13 @@ java ChatBot
 | how are you | Status response |
 | what is your name | Bot introduces itself |
 | time | Current time |
-| joke | Tells a joke 😂 |
+| joke | Tells a joke |
 | help | Lists features |
 | bye / goodbye | Farewell message |
 
-## 📄 License
+## License
 
 MIT — free to use and modify.
 
-## 👨‍💻 Author
+## Author
 **Pujan Rasaili**
